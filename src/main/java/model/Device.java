@@ -5,13 +5,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Device {
 
-    String name;
-    boolean policyBased;
-    String[] policies;
-    String policyNameInInitialPlan;
-    boolean hasSeveralPolicies;
-    String details;
-    String checkedInInitialPlan;
+    private String name;
+    private boolean policyBased;
+    private String[] policies;
+    private String policyNameInInitialPlan;
+    private boolean hasSeveralPolicies;
+    private String details;
+    private String checkedInInitialPlan;
+
+    public Device(String name, boolean policyBased, String[] policies, String policyNameInInitialPlan, boolean hasSeveralPolicies, String details, String checkedInInitialPlan) {
+        this.name = name;
+        this.policyBased = policyBased;
+        this.policies = policies;
+        this.policyNameInInitialPlan = policyNameInInitialPlan;
+        this.hasSeveralPolicies = hasSeveralPolicies;
+        this.details = details;
+        this.checkedInInitialPlan = checkedInInitialPlan;
+    }
 
     public String getName() {
         return name;

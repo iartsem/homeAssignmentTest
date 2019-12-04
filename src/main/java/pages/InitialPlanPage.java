@@ -1,12 +1,12 @@
 package pages;
 
+import model.Device;
 import model.ResultData;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import parsers.GenericLazyMapParser;
 
-import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InitialPlanPage extends BasePage {
@@ -33,16 +33,34 @@ public class InitialPlanPage extends BasePage {
     @FindBy(xpath = "#path")
     WebElement checkboxInInitialPlan;
 
-    private static final String FILE = "";
-
-    public ResultData readJsonToClass() {
-        InputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(FILE);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+    public ArrayList<Device> getListOfDevices() {
+        ArrayList<Device> devicesList = new ArrayList<Device>();
+        for (int i = 0; i < deviceItem.size(); i++) {
+            String[] policiesList = policies.getText().split(",");
+            Device device = new Device(
+                    deviceName.getText(),
+                    true,
+                    policiesList,
+                    policyNameInInitialPlan.getText(),
+                    true,
+                    details.getText(),
+                    String.valueOf(isCheckedInInitialPlan()));
+            devicesList.add(device);
         }
-        assert inputStream != null;
-        return GenericLazyMapParser.parse(inputStream, ResultData.class);
+        return devicesList;
+    }
+
+    public ResultData getResultData() {
+        ArrayList<Device> deviceList = getListOfDevices();
+        boolean mixTraffic = isMixTraffic();
+        return new ResultData(mixTraffic, deviceList);
+    }
+
+    private boolean isCheckedInInitialPlan() {
+        return checkboxInInitialPlan.isSelected();
+    }
+
+    private boolean isMixTraffic(){
+        return false;
     }
 }

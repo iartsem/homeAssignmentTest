@@ -16,6 +16,11 @@ public class BasePage {
         PageFactory.initElements(webDriver, this);
     }
 
+    public BasePage navigateToBasePage(){
+        webDriver.get("URL");
+        return this;
+    }
+
     public InitialPlanPage openInitialPlanPage() {
         return new InitialPlanPage(webDriver);
     }
